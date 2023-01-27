@@ -1,4 +1,5 @@
 using ApiProject.Models;
+using ApiProject.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
 namespace ApiProject.Controllers
 {
@@ -6,18 +7,30 @@ namespace ApiProject.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private static List<Character> characters = new List<Character>{
-            new Character(),
-            new Character { Name = "Sam" }
-        };
+       
+        private readonly ICharacterService _characterService;
+
+        // Constructor
+        public CharacterController(ICharacterService characterService)
+        {
+            _characterService = characterService;
+        }
+        //http://localhost:6600/api/Character/GetAll
         [HttpGet("GetAll")]
         public ActionResult<List<Character>> Get(){
-            return Ok(characters);
+            return Ok(_characterService.GetAllCharacters());
         }
-         
-        [HttpGet]
-        public ActionResult<Character> GetSingle(){
-            return Ok(characters[0]);
+         // Display Specific Id URL: http://localhost:6600/api/Character/1
+        [HttpGet("{id}")]
+        public ActionResult<Character> GetSingle(int id){
+            return Ok(_characterService.GetCharacterById(id));
+        }
+
+        
+        [HttpPost]
+        public ActionResult<List<Character>> AddCharacter(Character newCharacter)
+        {
+            return Ok(_characterService.AddCharacter(newCharacter));
         }
     }
 }
