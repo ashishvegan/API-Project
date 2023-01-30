@@ -13,7 +13,6 @@ namespace ApiProject.Services.CharacterService
            characters.Add(newCharacter);
             return characters;
         }
-
         public List<Character> GetAllCharacters()
         {
             return characters;
@@ -21,7 +20,15 @@ namespace ApiProject.Services.CharacterService
 
         public Character GetCharacterById(int id)
         {
-            return characters.FirstOrDefault(x => x.Id == id);
+            var character = characters.FirstOrDefault(x => x.Id == id);
+            if(character is not null)
+            {
+                return character;
+            } 
+            else
+            {
+                throw new Exception("Character not found");
+            }
         }
     }
 }

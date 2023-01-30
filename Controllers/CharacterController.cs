@@ -18,19 +18,19 @@ namespace ApiProject.Controllers
         //http://localhost:6600/api/Character/GetAll
         [HttpGet("GetAll")]
         public ActionResult<List<Character>> Get(){
-            return Ok(_characterService.GetAllCharacters());
+            return Ok(_characterService.GetAllCharacters()); // Service Methods
         }
          // Display Specific Id URL: http://localhost:6600/api/Character/1
         [HttpGet("{id}")]
         public ActionResult<Character> GetSingle(int id){
-            return Ok(_characterService.GetCharacterById(id));
+            return Ok(_characterService.GetCharacterById(id)); // Service Methods
         }
 
         
         [HttpPost]
         public ActionResult<List<Character>> AddCharacter(Character newCharacter)
         {
-            return Ok(_characterService.AddCharacter(newCharacter));
+            return Ok(_characterService.AddCharacter(newCharacter)); // Service Methods
         }
     }
 }
