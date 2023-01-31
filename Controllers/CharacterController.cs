@@ -7,7 +7,6 @@ namespace ApiProject.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-       
         private readonly ICharacterService _characterService;
 
         // Constructor
@@ -17,20 +16,19 @@ namespace ApiProject.Controllers
         }
         //http://localhost:6600/api/Character/GetAll
         [HttpGet("GetAll")]
-        public ActionResult<List<Character>> Get(){
-            return Ok(_characterService.GetAllCharacters()); // Service Methods
+        public async Task<ActionResult<List<Character>>> Get(){
+            return Ok(await _characterService.GetAllCharacters()); // Service Methods
         }
          // Display Specific Id URL: http://localhost:6600/api/Character/1
         [HttpGet("{id}")]
-        public ActionResult<Character> GetSingle(int id){
-            return Ok(_characterService.GetCharacterById(id)); // Service Methods
+        public async Task<ActionResult<Character>> GetSingle(int id){
+            return Ok(await _characterService.GetCharacterById(id)); // Service Methods
         }
 
-        
         [HttpPost]
-        public ActionResult<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<ActionResult<List<Character>>> AddCharacter(Character newCharacter)
         {
-            return Ok(_characterService.AddCharacter(newCharacter)); // Service Methods
+            return Ok(await _characterService.AddCharacter(newCharacter)); // Service Methods
         }
     }
 }
