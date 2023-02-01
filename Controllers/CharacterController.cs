@@ -31,5 +31,16 @@ namespace ApiProject.Controllers
         {
             return Ok(await _characterService.AddCharacter(newCharacter)); // Service Methods
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var response = await _characterService.UpdateCharacter(updatedCharacter);
+            if(response.Data is null) // if Charcter not found throw 404
+            {
+                return NotFound(response);
+            }
+            return Ok(response); // Service Methods
+        }
     }
 }
