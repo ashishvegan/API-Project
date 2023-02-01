@@ -1,3 +1,4 @@
+using ApiProject.DTOs.Character;
 using ApiProject.Models;
 using ApiProject.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +17,17 @@ namespace ApiProject.Controllers
         }
         //http://localhost:6600/api/Character/GetAll
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> Get(){
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get(){
             return Ok(await _characterService.GetAllCharacters()); // Service Methods
         }
          // Display Specific Id URL: http://localhost:6600/api/Character/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<Character>>> GetSingle(int id){
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id){
             return Ok(await _characterService.GetCharacterById(id)); // Service Methods
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> AddCharacter(Character newCharacter)
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter)
         {
             return Ok(await _characterService.AddCharacter(newCharacter)); // Service Methods
         }
