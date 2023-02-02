@@ -9,6 +9,8 @@ namespace ApiProject
         {
             CreateMap<Character,GetCharacterDto>();
             CreateMap<AddCharacterDto,Character>();
+            CreateMap<UpdateCharacterDto, Character>();
+
         }
     }
 }

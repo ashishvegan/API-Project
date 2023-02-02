@@ -42,5 +42,15 @@ namespace ApiProject.Controllers
             }
             return Ok(response); // Service Methods
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(int id){
+            var response = await _characterService.DeleteCharacter(id);
+            if(response.Data is null) // if Charcter not found throw 404
+            {
+                return NotFound(response);
+            }
+            return Ok(response); // Service Methods
+        }
     }
 }

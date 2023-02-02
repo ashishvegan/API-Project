@@ -24,6 +24,29 @@ namespace ApiProject.Services.CharacterService
             serviceResponse.Data = characters.Select(x => _mapper.Map<GetCharacterDto>(x)).ToList();
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+            try
+            {
+                var character = characters.FirstOrDefault(x => x.Id == id);
+                if(character is null)
+                {
+                    throw new Exception($"Character with id '{id}' not found in the list.");
+                }
+                characters.Remove(character);
+                serviceResponse.Data = characters.Select(x => _mapper.Map<GetCharacterDto>(x)).ToList();
+            }
+
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
@@ -49,6 +72,7 @@ namespace ApiProject.Services.CharacterService
                 {
                     throw new Exception($"Character with id '{updatedCharacter.Id}' not found in the list.");
                 }
+                _mapper.Map(updatedCharacter, character);
                 character.Name = updatedCharacter.Name;
                 character.HitPoints = updatedCharacter.HitPoints;
                 character.Strength = updatedCharacter.Strength;
